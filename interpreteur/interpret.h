@@ -65,7 +65,7 @@ void clearStack(BinaryBlock* block);
 
 int allocate(int size, Pages* memory);
 int reAllocate(int size, Pages* memory, int adress);
-void free(Pages* page, int adress);
+void freeMem(Pages* page, int adress);
 void secureFree(Pages* page, int adress);
 
 #endif
