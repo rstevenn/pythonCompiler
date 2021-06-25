@@ -8,11 +8,15 @@ BinaryBlock* newBlock(size_t nbSeg, int segSize)
 
     if (segSize <= 0 || segSize%8 != 0)
     {
-        printf("[-] while creating a new memory space, the segment size %x must be > 0 and must be a multiple of 8\n", segSize);
+        printf("[-] Error while creating a new memory space, the segment size %x must be > 0 and must be a multiple of 8\n", segSize);
         exit(1);
     }
 
     BinaryBlock* block = (BinaryBlock*)malloc(sizeof(BinaryBlock));
+    if (block == NULL)
+    {
+        printf("[-] Error while creating a Block (block), memory allocation\n");
+    }
 
     block->segSize = segSize;
     block->vBaseAdress = 0;
@@ -20,6 +24,11 @@ BinaryBlock* newBlock(size_t nbSeg, int segSize)
     block->nextBlock = NULL;
     block->prevBlock = NULL;
     block->data = (uint8_t*)malloc(segSize * nbSeg);
+
+    if (block->data == NULL)
+    {
+        printf("[-] Error while creating a Block (block->data), memory allocation\n");
+    }
 
     return block;
 }
@@ -66,6 +75,10 @@ BinaryBlock* addBlock(BinaryBlock* prevBlock, size_t nbSeg)
 
 
     BinaryBlock* block = (BinaryBlock*) malloc(sizeof(BinaryBlock));
+    if (block == NULL)
+    {
+        printf("[-] Error while adding a Block, memory allocation\n");
+    }
 
     block->segSize = prevBlock->segSize;
     block->vBaseAdress = prevBlock->vMaxAdress + 1;
@@ -73,6 +86,10 @@ BinaryBlock* addBlock(BinaryBlock* prevBlock, size_t nbSeg)
     block->nextBlock = NULL;
     block->prevBlock = prevBlock;
     block->data = malloc(nbSeg * prevBlock->segSize);
+    if (block->data == NULL)
+    {
+        printf("[-] Error while adding a Block (block->data), memory allocation\n");
+    }
 
     prevBlock->nextBlock = block;
 
@@ -83,13 +100,17 @@ BinaryBlock* addBlock(BinaryBlock* prevBlock, size_t nbSeg)
 uint8_t* readingSegment(BinaryBlock* block, int adress)
 {
     uint8_t* data = malloc(block->segSize);
+    if (data == NULL)
+    {
+        printf("[-] Error while reading segment, memory allocation\n");
+    }
 
     while (block->vMaxAdress < adress)
     {
 
         if (block->nextBlock == NULL)
         {
-            printf("[-] While reading segment, adress %x must be less than %x", adress, block->vMaxAdress);
+            printf("[-] Error while reading segment, adress %x must be less than %x", adress, block->vMaxAdress);
             exit(1);
         }
 
@@ -102,7 +123,7 @@ uint8_t* readingSegment(BinaryBlock* block, int adress)
     {
         if (block->prevBlock == NULL)
         {
-            printf("[-] While reading segment, adress %x must be greater than %x", adress, block->vBaseAdress);
+            printf("[-] Error while reading segment, adress %x must be greater than %x", adress, block->vBaseAdress);
             exit(1);
         }
         block = block->prevBlock;
@@ -125,7 +146,7 @@ BinaryBlock* writeSegment(BinaryBlock* block, int adress, uint8_t* data)
 
         if (block->nextBlock == NULL)
         {
-            printf("[-] While writing segment, adress %x must be less than %x", adress, block->vMaxAdress);
+            printf("[-] Error while writing segment, adress %x must be less than %x", adress, block->vMaxAdress);
             exit(1);
         }
 
