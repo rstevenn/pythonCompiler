@@ -95,11 +95,11 @@ int allocate(int size, Pages* memory)
     {
         if ( i == 0 && memory->nbPages == 0)
         {
-            memory->pages = (*Page)malloc(sizeof(Page));
-            memory->headers = (*MemoryHeader)malloc(sizeof(MemoryHeader));
+            memory->pages = (Page*)malloc(sizeof(Page));
+            memory->headers = (PageHeader*)malloc(sizeof(PageHeader));
         } else {
-            memory->pages = (*Page)realloc(sizeof(Page) * (memory->nbPages + i));
-            memory->headers = (*MemoryHeader)realloc(sizeof(MemoryHeader) * (memory->nbPages + i));
+            memory->pages = (Page*)realloc(memory->pages, sizeof(Page) * (memory->nbPages + i));
+            memory->headers = (PageHeader*)realloc(memory->headers, sizeof(PageHeader) * (memory->nbPages + i));
         }
         
     }
