@@ -190,7 +190,7 @@ int allocate(int size, Pages* memory)
         exit(1);
     }
 
-    if (regs->pc == NULL)
+    if (memory->headers == NULL)
     {
         printf("[-] Error while allocating pages (memory->headers), memory allocation\n");
         exit(1);
