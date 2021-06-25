@@ -16,6 +16,7 @@ BinaryBlock* newBlock(size_t nbSeg, int segSize)
     if (block == NULL)
     {
         printf("[-] Error while creating a Block (block), memory allocation\n");
+        exit(1);
     }
 
     block->segSize = segSize;
@@ -28,6 +29,7 @@ BinaryBlock* newBlock(size_t nbSeg, int segSize)
     if (block->data == NULL)
     {
         printf("[-] Error while creating a Block (block->data), memory allocation\n");
+        exit(1);
     }
 
     return block;
@@ -78,6 +80,7 @@ BinaryBlock* addBlock(BinaryBlock* prevBlock, size_t nbSeg)
     if (block == NULL)
     {
         printf("[-] Error while adding a Block, memory allocation\n");
+        exit(1);
     }
 
     block->segSize = prevBlock->segSize;
@@ -89,6 +92,7 @@ BinaryBlock* addBlock(BinaryBlock* prevBlock, size_t nbSeg)
     if (block->data == NULL)
     {
         printf("[-] Error while adding a Block (block->data), memory allocation\n");
+        exit(1);
     }
 
     prevBlock->nextBlock = block;
@@ -103,6 +107,7 @@ uint8_t* readingSegment(BinaryBlock* block, int adress)
     if (data == NULL)
     {
         printf("[-] Error while reading segment, memory allocation\n");
+        exit(1);
     }
 
     while (block->vMaxAdress < adress)
