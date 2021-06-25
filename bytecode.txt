@@ -1,0 +1,38 @@
+cl interpreteur/*.c main.c /link /out:main.exe
+
+===============
+# CODE BLOCKS #
+===============
+a struc with
+vBaseAdress = virtual adress of the 1st line of code
+vMaxAdress = the last virtual adress of the block
+nextBlock = the pointer to the next block
+prevBlock = the pointer to the previous block
+code = a block of bytes composing the source code (64 lines)
+line
+
+
+==============
+# OPERATIONS #
+==============
+
+# the end of the code
+stop
+0xff 0 0 0 
+
+
+# add 2 ints from 2 vars
+addiv destination source1  source2
+0x00  (64bit)     (64bits) (64bits)
+
+# add a int from a var and a literal
+addil destination source1  literal
+0x01  (64bit)     (64bits) (64bits)
+
+# add 2 floats from 2 vars
+addfv destination source1  source2
+0x02  (64bit)     (64bits) (64bits)
+
+# add a float from a var and a literal
+addfl destination source1  literal
+0x03  (64bit)     (64bits) (64bits)
