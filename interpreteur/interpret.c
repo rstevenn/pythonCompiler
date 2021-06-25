@@ -88,19 +88,20 @@ int allocate(int size, Pages* memory)
         nbPages++;
     }
 
+    if (memory->nbPages == 0)
+    {
+        memory->pages = (Page*)malloc(sizeof(Page) * nbPages);
+        memory->headers = (PageHeader*)malloc(sizeof(PageHeader) *  nbPages);
+    } else {
+        memory->pages = (Page*)realloc(memory->pages, sizeof(Page) * (memory->nbPages + nbPages));
+        memory->headers = (PageHeader*)realloc(memory->headers, sizeof(PageHeader) * (memory->nbPages + nbPages));
+    }
     /*
     Basicly create new pages as a naive way of allocating memory 
     */
     for (int i = 0; i < nbPages; i++)
     {
-        if ( i == 0 && memory->nbPages == 0)
-        {
-            memory->pages = (Page*)malloc(sizeof(Page));
-            memory->headers = (PageHeader*)malloc(sizeof(PageHeader));
-        } else {
-            memory->pages = (Page*)realloc(memory->pages, sizeof(Page) * (memory->nbPages + i));
-            memory->headers = (PageHeader*)realloc(memory->headers, sizeof(PageHeader) * (memory->nbPages + i));
-        }
+
         
     }
 
