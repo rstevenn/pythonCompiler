@@ -11,6 +11,7 @@
 typedef struct pheader {
     int index;
     int allocated: 1;
+    struct pheader* nextPage;
     int vBaseAdress;
     int vMaxAdress;
 } PageHeader;
@@ -30,20 +31,20 @@ typedef struct pages
 
 typedef struct registers {
     
-    uint8_t* pc;
-    uint8_t* sp;
-    uint8_t* ra;
+    uint8_t pc[ENCODING/8];
+    uint8_t sp[ENCODING/8];
+    uint8_t ra[ENCODING/8];
 
-    uint8_t* r0;
-    uint8_t* r1;
-    uint8_t* r2;
-    uint8_t* r3;
-    uint8_t* r4;
-    uint8_t* r5;
-    uint8_t* r6;
-    uint8_t* r7;
-    uint8_t* r8;
-    uint8_t* r9;
+    uint8_t r0[ENCODING/8];
+    uint8_t r1[ENCODING/8];
+    uint8_t r2[ENCODING/8];
+    uint8_t r3[ENCODING/8];
+    uint8_t r4[ENCODING/8];
+    uint8_t r5[ENCODING/8];
+    uint8_t r6[ENCODING/8];
+    uint8_t r7[ENCODING/8];
+    uint8_t r8[ENCODING/8];
+    uint8_t r9[ENCODING/8];
     
 } Registers;
 
@@ -66,6 +67,6 @@ void clearStack(BinaryBlock* block);
 int allocate(int size, Pages* memory);
 int reAllocate(int size, Pages* memory, int adress);
 void freeMem(Pages* page, int adress);
-void secureFree(Pages* page, int adress);
+void secureFree(Pages* page, int adress); // same as free meme, but put the rewrite garbage on the allocated memore
 
 #endif
