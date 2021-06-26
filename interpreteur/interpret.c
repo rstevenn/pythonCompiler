@@ -60,12 +60,27 @@ void clearStack(BinaryBlock* block)
 
 InterpretreData* newIData(void)
 {
-    InterpretreData* iData = 
+    InterpretreData* iData = (InterpretreData*)malloc(sizeof(InterpretreData));
+
+    if (iData == NULL)
+    {
+        printf("[-] Error while creating the interpreteur data (iData), memory allocation\n");
+        exit(1);
+    }
+
+    iData->regs = newRegisters();
+    iData->pages = newPages();
+    iData->stack = newStack();
+
+    return iData;
 }
 
-void clearIData(InterpretreData iData)
+void clearIData(InterpretreData* iData)
 {
-
+    clearRegisters(iData->regs);
+    clearPages(iData->pages);
+    clearStack(iData->stack);
+    free(iData);
 }
 
 

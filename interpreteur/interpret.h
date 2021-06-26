@@ -65,7 +65,7 @@ BinaryBlock* newStack(void);
 void clearStack(BinaryBlock* block);
 
 InterpretreData* newIData(void);
-void clearIData(InterpretreData data);
+void clearIData(InterpretreData* data);
 
 int allocate(int size, Pages* memory);
 int reAllocate(int size, Pages* memory, int adress);

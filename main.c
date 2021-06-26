@@ -58,10 +58,10 @@ int main(int argc, char* argv[])
     printf("[+] CodeBlock destroyed with sucess\n");
 
 
-    Registers* regs = newRegisters();
-    printf("[+] Registers created with sucess\n");
-    clearRegisters(regs);
-    printf("[+] Registers destroyed with sucess\n");
+    InterpretreData* idat = newIData();
+    printf("[+] InterpretreData created with sucess\n");
+    clearIData(idat);
+    printf("[+] InterpretreData destroyed with sucess\n");
 
     return 0;
 }
