@@ -58,10 +58,23 @@ void clearStack(BinaryBlock* block)
     clearData(block);
 }
 
+InterpretreData* newIData(void)
+{
+    InterpretreData* iData = 
+}
+
+void clearIData(InterpretreData iData)
+{
+
+}
+
+
+
 int allocate(int size, Pages* memory)
 {
     int vAdress;
     int nbPages = size / (PAGES_SIZE * PAGES_SEG_SIZE);
+    PageHeader header;
 
     if(size%(PAGES_SIZE * PAGES_SEG_SIZE) != 0)
     {
@@ -95,7 +108,29 @@ int allocate(int size, Pages* memory)
     */
     for (int i = 0; i < nbPages; i++)
     {
-        
+        header = memory->headers[i + nbPages];
+
+        header.index = i + nbPages;
+        header.allocated = 1;
+
+        if (header.index == 0)
+        {
+            header.vBaseAdress = 0;
+        } else {
+            header.vBaseAdress = memory->headers[i + nbPages - 1].vMaxAdress + 1;
+        }
+
+        header.vMaxAdress = header.vBaseAdress+PAGES_SEG_SIZE-1;
+
+        if (i == 0)
+            vAdress = header.vBaseAdress;
+
+        if (i == nbPages-1)
+        {
+            header.nextHeader = NULL;
+        } else {
+            header.nextHeader = &(memory->headers[i + nbPages - 1]);
+        }
     }
 
     return vAdress;

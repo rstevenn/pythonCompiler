@@ -11,7 +11,7 @@
 typedef struct pheader {
     int index;
     int allocated: 1;
-    struct pheader* nextPage;
+    struct pheader* nextHeader;
     int vBaseAdress;
     int vMaxAdress;
 } PageHeader;
@@ -53,7 +53,7 @@ typedef struct data
     Registers* regs;
     Pages* pages;
     BinaryBlock* stack;
-} InterpertreData;
+} InterpretreData;
 
 Registers* newRegisters(void);
 void clearRegisters(Registers* regs);
@@ -63,6 +63,9 @@ void clearPages(Pages* pages);
 
 BinaryBlock* newStack(void);
 void clearStack(BinaryBlock* block);
+
+InterpretreData* newIData(void);
+void clearIData(InterpretreData data);
 
 int allocate(int size, Pages* memory);
 int reAllocate(int size, Pages* memory, int adress);
